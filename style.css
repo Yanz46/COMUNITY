@@ -126,3 +126,20 @@ footer {
     padding: 10px;
     cursor: pointer;
 }
+.hubungi-kami {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-decoration: none;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transisi untuk animasi */
+}
+
+.hubungi-kami:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px); /* Efek hover: sedikit naik */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Efek hover: bayangan */
+}
