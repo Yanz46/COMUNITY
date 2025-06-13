@@ -1,106 +1,911 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>YanMC_Official_Website</title>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KingStore - Solusi Peningkatan Media Sosial</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- General Styles --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 90vh; /* Agar container cukup tinggi */
+        }
+        header {
+            background-color: #6a1b9a; /* Warna ungu gelap */
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .header-logo {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .content-area {
+            padding: 25px;
+            flex-grow: 1; /* Agar konten mengisi sisa ruang */
+            display: flex;
+            flex-direction: column;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="number"],
+        select {
+            width: calc(100% - 20px);
+            padding: 12px 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            border-color: #6a1b9a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(106, 27, 154, 0.2);
+        }
+        input[disabled], select[disabled] {
+            background-color: #e9ecef;
+            cursor: not-allowed;
+        }
+        .button {
+            width: 100%;
+            padding: 15px;
+            background-color: #8e24aa;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #7b1fa2;
+        }
+        .button.secondary {
+            background-color: #6c757d;
+        }
+        .button.secondary:hover {
+            background-color: #5a6268;
+        }
+        .text-center {
+            text-align: center;
+        }
+        .link {
+            color: #6a1b9a;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .link:hover {
+            text-decoration: underline;
+        }
+        .info-box {
+            background-color: #e3f2fd;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 12px;
+            color: #333;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+        .info-box h3 {
+            color: #1976d2;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+        .min-max-info {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+        .charge-info {
+            font-size: 16px;
+            font-weight: 600;
+            color: #28a745;
+            margin-top: 10px;
+            text-align: right;
+            padding-right: 10px;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+        .success-message {
+            color: #28a745;
+            font-size: 14px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+        }
+
+        /* --- View Specific Styles --- */
+        .view {
+            display: none; /* Hide all views by default */
+        }
+        .view.active {
+            display: flex; /* Show active view */
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        /* Dashboard */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        .balance-box {
+            background-color: #e8f5e9; /* Light green for balance */
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #c8e6c9;
+        }
+        .balance-box h4 {
+            color: #388e3c;
+            margin: 0 0 5px 0;
+            font-size: 16px;
+        }
+        .balance-box p {
+            font-size: 28px;
+            font-weight: 700;
+            color: #2e7d32;
+            margin: 0;
+        }
+        .dashboard-nav {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+        .dashboard-nav button {
+            flex: 1;
+            margin: 0 5px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #555;
+            text-decoration: none; /* For links */
+        }
+        .dashboard-nav button:hover, .dashboard-nav button.active {
+            background-color: #6a1b9a;
+            color: white;
+            border-color: #6a1b9a;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .history-item {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            background-color: #fafafa;
+        }
+        .history-item p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #444;
+        }
+        .history-item .status {
+            font-weight: 600;
+            color: #1976d2; /* Default blue */
+        }
+        .history-item .status.completed { color: #28a745; } /* Green */
+        .history-item .status.pending { color: #ffc107; } /* Yellow */
+        .history-item .status.cancelled { color: #dc3545; } /* Red */
+
+        /* Deposit Page */
+        .deposit-methods {
+            margin-top: 20px;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+        .deposit-methods h4 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        .deposit-option {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #fafafa;
+        }
+        .deposit-option button {
+            padding: 8px 15px;
+            background-color: #25d366;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .deposit-option button:hover {
+            background-color: #1da851;
+        }
+        .deposit-note {
+            font-size: 13px;
+            color: #777;
+            margin-top: 10px;
+        }
+        .deposit-input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .deposit-input-group input {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+        .deposit-input-group span {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Order Page Specific */
+        .order-form-container {
+            /* flex-grow: 1; */
+            /* display: flex; */
+            /* flex-direction: column; */
+        }
+        .order-form-container .tutorial-info {
+            margin-bottom: 0; /* Remove extra space below tutorial in order page */
+        }
+        .order-form-container .info-box {
+            margin-bottom: 25px; /* Add space below welcome in order page */
+        }
+
+        /* Whatsapp float button */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25d366;
+            color: white;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
-  <header>
-   <div class="profile">
-        <img src="profile.gif" alt="error image" class="animate__animated
-          animate__pulse animate__infinite" />
-        <p class="animate__animated animate__fadeInDownBig">selamat datang di Comunity 𝙎𝙇</p>  
-      </div>
-      <h2>berikut beberapa saluran yang ada di Comunity 𝙎𝙇</h2>
-    </header>
-<body>
-    <div class="slider">
-        <div class="slider-container">
-            <div class="slide">
-                <img src="logo.jpg" alt="Gambar 1">
+    <div class="container">
+        <header>
+            <img src="https://via.placeholder.com/40x40/6a1b9a/FFFFFF?text=K" alt="KingStore Logo" class="header-logo">
+            KingStore
+        </header>
+
+        <div class="content-area">
+            <div id="loginView" class="view active">
+                <h3 class="section-title text-center">Login ke Akun Anda</h3>
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Masukkan Email Anda">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Masukkan Password Anda">
+                </div>
+                <div id="loginError" class="error-message text-center" style="display:none;"></div>
+                <button class="button" onclick="handleLogin()">Login</button>
+                <p class="text-center" style="margin-top: 20px;">Belum punya akun? <span class="link" onclick="showView('registerView')">Daftar Sekarang</span></p>
             </div>
-            <div class="slide">
-                <img src="logo2.jpg" alt="Gambar 2">
+
+            <div id="registerView" class="view">
+                <h3 class="section-title text-center">Daftar Akun Baru</h3>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" placeholder="Masukkan Email Anda">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" placeholder="Buat Password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Konfirmasi Password</label>
+                    <input type="password" id="confirmPassword" placeholder="Konfirmasi Password Anda">
+                </div>
+                <div id="registerError" class="error-message text-center" style="display:none;"></div>
+                <button class="button" onclick="handleRegister()">Daftar</button>
+                <p class="text-center" style="margin-top: 20px;">Sudah punya akun? <span class="link" onclick="showView('loginView')">Login di sini</span></p>
             </div>
-            <div class="slide">
-                <img src="logo3.jpg" alt="Gambar 3">
+
+            <div id="dashboardView" class="view">
+                <div class="dashboard-header">
+                    <h3 class="section-title" style="margin-bottom: 0;">Dashboard</h3>
+                    <button class="button secondary" style="width: auto; padding: 8px 15px;" onclick="handleLogout()">Logout</button>
+                </div>
+
+                <div class="balance-box">
+                    <h4>Saldo Koin Anda</h4>
+                    <p id="coinBalanceDisplay">0 Koin</p>
+                </div>
+
+                <div class="dashboard-nav">
+                    <button id="navOrder" class="active" onclick="showDashboardSection('order')">Pesan Layanan</button>
+                    <button id="navDeposit" onclick="showDashboardSection('deposit')">Deposit</button>
+                    <button id="navHistory" onclick="showDashboardSection('history')">Riwayat</button>
+                </div>
+
+                <div id="dashboardOrderSection" class="dashboard-section active">
+                    <div class="info-box">
+                        <h3>Selamat Datang di KingStore!</h3>
+                        <p>Kami sangat senang Anda bergabung dengan keluarga besar KingStore. Di sini, Anda akan menemukan solusi terbaik untuk meningkatkan kehadiran media sosial Anda. Kami berkomitmen untuk menyediakan layanan yang cepat, aman, dan efektif. Mari kita mulai perjalanan Anda menuju kesuksesan digital bersama kami!</p>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" placeholder="Search" disabled>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <select id="category">
+                            <option value="">Pilih Kategori</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="service">Service</label>
+                        <select id="service">
+                            <option value="">Pilih Layanan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="link">Link</label>
+                        <input type="text" id="link" placeholder="Masukkan Link">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantity">Quantity</label>
+                        <input type="number" id="quantity" min="10" max="10000" placeholder="Min: 10 - Max: 10000">
+                        <div class="min-max-info">Min: 10 - Max: 10 000</div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="charge-info" id="chargeDisplay">Charge: Rp 0</div>
+                    </div>
+
+                    <button type="submit" class="button" onclick="handleOrder()">Pesan Sekarang</button>
+
+                    <div class="info-box tutorial-info">
+                        <h3>Panduan Pembelian di KingStore!</h3>
+                        <p>Siap meningkatkan performa media sosial Anda? Panduan ini akan mempermudah langkah pertama Anda!</p>
+                        <p>Sebelum memulai, mohon luangkan waktu sejenak untuk membaca **Syarat & Ketentuan** kami. Ini penting untuk memahami proses pembelian, kebijakan garansi, dan cara kerja layanan kami secara optimal.</p>
+                        <h4>Bagaimana Cara Membeli Layanan Kami?</h4>
+                        <ol>
+                            <li>**Lakukan Deposit:** Isi saldo akun Anda melalui metode pembayaran yang tersedia.</li>
+                            <li>**Pilih Kategori & Layanan:** Jelajahi berbagai pilihan kami mulai dari TikTok, Instagram, hingga YouTube.</li>
+                            <li>**Masukkan Detail Pesanan:** Berikan tautan profil atau konten Anda di kolom "Link" dan tentukan jumlah yang Anda inginkan di "Quantity".</li>
+                            <li>**Konfirmasi & Submit:** Periksa kembali pesanan Anda dan klik tombol "Submit".</li>
+                        </ol>
+                        <p>Mudah, bukan? Mari kita mulai tingkatkan kehadiran digital Anda bersama KingStore!</p>
+                    </div>
+                </div>
+
+                <div id="dashboardDepositSection" class="dashboard-section" style="display: none;">
+                    <h3 class="section-title">Deposit Koin</h3>
+                    <p class="deposit-note">Deposit akan dikonversi menjadi koin (1 Koin = Rp 1). Minimum deposit Rp 10.000.</p>
+
+                    <div class="form-group deposit-input-group">
+                        <input type="number" id="depositAmount" placeholder="Nominal deposit (contoh: 50000)" min="10000">
+                        <span>Rp</span>
+                    </div>
+                    <div id="depositError" class="error-message" style="display:none;"></div>
+                    <div id="depositSuccess" class="success-message" style="display:none;"></div>
+
+                    <button class="button" style="background-color: #25d366;" onclick="handleDeposit()">Deposit Sekarang (Simulasi)</button>
+
+                    <div class="deposit-methods">
+                        <h4>Metode Pembayaran (Simulasi):</h4>
+                        <div class="deposit-option">
+                            <span>Transfer Bank (BCA, Mandiri)</span>
+                            <button onclick="alert('Ini adalah simulasi. Harap gunakan fitur deposit di atas.');">Info</button>
+                        </div>
+                        <div class="deposit-option">
+                            <span>E-Wallet (Dana, OVO, GoPay)</span>
+                            <button onclick="alert('Ini adalah simulasi. Harap gunakan fitur deposit di atas.');">Info</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dashboardHistorySection" class="dashboard-section" style="display: none;">
+                    <h3 class="section-title">Riwayat Pesanan</h3>
+                    <div id="orderHistoryList">
+                        <p class="text-center" id="noHistoryMessage">Belum ada riwayat pesanan.</p>
+                    </div>
+                </div>
             </div>
-            <div class="slide">
-                <img src="logo4.jpg" alt="Gambar 3">
-            </div>
-        </div>
-        <div class="slider-controls">
-            <button class="prev-button">&#10094;</button>
-            <button class="next-button">&#10095;</button>
+
         </div>
     </div>
 
-    <script src="script.js"></script>
-</body>
-    <main>
-        <div class="container">
-            <div class="card">
-                <img src="logo.jpg" alt="Gambar 1">
-                <div class="card-content">
-                    <h3>YanMC_Official</h3>
-                    <p>  <p>
-<p>Donate admin yanMC
-<a href="https://sociabuzz.com/narutoshipudhen/tribe">Click di sini</a></p>
-<p>Donate admin Louis
-<a href="https://sociabuzz.com/TheBoysCuyyy/tribe">Click di sini</a>
-</p>
-<body>
-    <a href="https://whatsapp.com/channel/0029Vai1WDL05MUl6RIZ7W1K" class="button">Click di sini</a>
-</body></p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="logo2.jpg" alt="Gambar 2">
-                <div class="card-content">
-                    <h3>soullwood</h3>
-                    <p>  <p>
-<p>Buat yang mau req/support 
-<a href="https://saweria.co/Soull3">Click di sini</a>
-</p>
-<body>
-    <a href="https://whatsapp.com/channel/0029VaynDQ66hENxwfRSuz0c" class="button">Click di sini</a>
-</body>.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img src="logo3.jpg" alt="Gambar 3">
-                <div class="card-content">
-                    <h3>LENZ'NA</h3>
-                    <p>
-<p>💌 Request & Support<a href="https://sociabuzz.com/rubersya/tribe">Click di sini</a>
-</p>
-<body>
-    <a href="https://whatsapp.com/channel/0029Vax78uzL7UVZKJKtvJ3n" class="button">Click di sini</a>
-</body>
-                </div>
-            </div>
-            <div class="card">
-                <img src="logo4.jpg" alt="Gambar 4">
-                <div class="card-content">
-                    <h3>Yanz X Rio Store X Mc</h3>
-                    <p>
+    <a href="https://wa.me/6282229795661" target="_blank" class="whatsapp-float">
+        &#x2709;
+    </a>
 
-<p>💌 *Suport BY Rio Store X MC : <a href=": https://sociabuzz.com/zilankacili002/dona">Click di sini</a></p>
-<body>
-    <a href="https://whatsapp.com/channel/0029VazawzYLY6d1sTb9kl0a" class="button">Click di sini</a>
-</body>.</p>
-                </div>
-            </div>
-        </div>
-    </main>
-    <div style="text-align: center;">
-    <h3>join Comunity</h3>
-<a href="https://wa.me/6283191658203" class="hubungi-kami">Hubungi Kami</a></div>
+    <script>
+        // --- Global Variables (Simulasi Data) ---
+        let currentUser = null; // Stores current logged-in user email
+        let users = JSON.parse(localStorage.getItem('kingstoreUsers')) || {}; // { email: { password, coins, history } }
+        const whatsappNumber = '6282229795661';
 
-    <footer>
-        <p>&copy; 2025 YanMC_Official_Website</p>
-    </footer>
+        const allServicesData = {
+            "Tiktok": [
+                { name: "Tiktok 100 Followers", base_qty: 100, price: 10000, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Tiktok 10000 Views", base_qty: 10000, price: 500, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Tiktok 100 Like", base_qty: 100, price: 300, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Tiktok Comment", base_qty: 1, price: 0, min: 0, max: 0, status: "Habis" },
+                { name: "Tiktok 1000 Share", base_qty: 1000, price: 500, min: 10, max: 10000, status: "Tersedia" }
+            ],
+            "Instagram": [
+                { name: "Instagram 100 Followers", base_qty: 100, price: 3000, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Instagram 100 Like", base_qty: 100, price: 1000, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Instagram 5000 Views", base_qty: 5000, price: 500, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Instagram Comment", base_qty: 1, price: 0, min: 0, max: 0, status: "Habis" },
+                { name: "Instagram 100 Share", base_qty: 100, price: 700, min: 10, max: 10000, status: "Tersedia" }
+            ],
+            "Facebook": [
+                { name: "Facebook 100 Followers", base_qty: 100, price: 1500, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Facebook 100 Like", base_qty: 100, price: 1500, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Facebook 100 Views", base_qty: 100, price: 1000, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Facebook 100 Share", base_qty: 100, price: 4000, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Facebook Comment", base_qty: 1, price: 0, min: 0, max: 0, status: "Habis" }
+            ],
+            "Youtube": [
+                { name: "Youtube 100 Subscriber", base_qty: 100, price: 8000, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Youtube 1000 Views Live", base_qty: 1000, price: 2500, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Youtube 100 Views", base_qty: 100, price: 1500, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Youtube 100 Like", base_qty: 100, price: 2000, min: 10, max: 10000, status: "Tersedia" },
+                { name: "Youtube Comment", base_qty: 1, price: 0, min: 0, max: 0, status: "Habis" }
+            ],
+            "Whatsapp": [
+                { name: "Whatsapp Channel 100 Member", base_qty: 100, price: 9000, min: 10, max: 10000, status: "Tersedia" }
+            ],
+            "Telegram": [
+                { name: "Telegram Channel 100 Member", base_qty: 100, price: 1500, min: 10, max: 10000, status: "Tersedia" }
+            ]
+        };
 
-    <script src="script.js"></script>
+        // --- DOM Elements ---
+        const loginView = document.getElementById('loginView');
+        const registerView = document.getElementById('registerView');
+        const dashboardView = document.getElementById('dashboardView');
+        const loginError = document.getElementById('loginError');
+        const registerError = document.getElementById('registerError');
+        const coinBalanceDisplay = document.getElementById('coinBalanceDisplay');
+        const orderHistoryList = document.getElementById('orderHistoryList');
+        const noHistoryMessage = document.getElementById('noHistoryMessage');
+
+        const categorySelect = document.getElementById('category');
+        const serviceSelect = document.getElementById('service');
+        const linkInput = document.getElementById('link');
+        const quantityInput = document.getElementById('quantity');
+        const chargeDisplay = document.getElementById('chargeDisplay');
+        const depositAmountInput = document.getElementById('depositAmount');
+        const depositError = document.getElementById('depositError');
+        const depositSuccess = document.getElementById('depositSuccess');
+
+        const navOrder = document.getElementById('navOrder');
+        const navDeposit = document.getElementById('navDeposit');
+        const navHistory = document.getElementById('navHistory');
+        const dashboardOrderSection = document.getElementById('dashboardOrderSection');
+        const dashboardDepositSection = document.getElementById('dashboardDepositSection');
+        const dashboardHistorySection = document.getElementById('dashboardHistorySection');
+
+
+        // --- View Management ---
+        function showView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        function showDashboardSection(section) {
+            document.querySelectorAll('.dashboard-section').forEach(sec => {
+                sec.style.display = 'none';
+            });
+            document.querySelectorAll('.dashboard-nav button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            if (section === 'order') {
+                dashboardOrderSection.style.display = 'flex';
+                navOrder.classList.add('active');
+            } else if (section === 'deposit') {
+                dashboardDepositSection.style.display = 'block';
+                navDeposit.classList.add('active');
+                depositAmountInput.value = ''; // Clear input
+                hideMessage(depositError);
+                hideMessage(depositSuccess);
+            } else if (section === 'history') {
+                dashboardHistorySection.style.display = 'block';
+                navHistory.classList.add('active');
+                renderOrderHistory();
+            }
+        }
+
+        function showMessage(element, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        function hideMessage(element) {
+            element.style.display = 'none';
+            element.textContent = '';
+        }
+
+        // --- User Management (Simulasi) ---
+        function saveUsersToLocalStorage() {
+            localStorage.setItem('kingstoreUsers', JSON.stringify(users));
+        }
+
+        function handleLogin() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            hideMessage(loginError);
+
+            if (!email || !password) {
+                showMessage(loginError, 'Email dan password harus diisi.');
+                return;
+            }
+            if (!users[email] || users[email].password !== password) { // Simple password check for simulation
+                showMessage(loginError, 'Email atau password salah.');
+                return;
+            }
+
+            currentUser = email;
+            updateDashboard();
+            showView('dashboardView');
+            showDashboardSection('order'); // Default to order section after login
+        }
+
+        function handleRegister() {
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+            hideMessage(registerError);
+
+            if (!email || !password || !confirmPassword) {
+                showMessage(registerError, 'Semua kolom harus diisi.');
+                return;
+            }
+            if (password !== confirmPassword) {
+                showMessage(registerError, 'Konfirmasi password tidak cocok.');
+                return;
+            }
+            if (users[email]) {
+                showMessage(registerError, 'Email sudah terdaftar. Silakan login.');
+                return;
+            }
+
+            users[email] = { password: password, coins: 0, history: [] };
+            saveUsersToLocalStorage();
+            currentUser = email;
+            alert('Registrasi Berhasil! Anda sekarang login.');
+            updateDashboard();
+            showView('dashboardView');
+            showDashboardSection('order');
+        }
+
+        function handleLogout() {
+            currentUser = null;
+            alert('Anda telah logout.');
+            showView('loginView');
+            // Clear form inputs when logging out
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+            document.getElementById('registerEmail').value = '';
+            document.getElementById('registerPassword').value = '';
+            document.getElementById('confirmPassword').value = '';
+        }
+
+        function updateDashboard() {
+            if (currentUser && users[currentUser]) {
+                coinBalanceDisplay.textContent = `${users[currentUser].coins.toLocaleString('id-ID')} Koin`;
+                // Re-populate categories and services for order form
+                populateCategories();
+                resetOrderForm();
+                renderOrderHistory();
+            } else {
+                coinBalanceDisplay.textContent = '0 Koin';
+            }
+        }
+
+        // --- Deposit Function (Simulasi) ---
+        function handleDeposit() {
+            const amount = parseInt(depositAmountInput.value);
+            hideMessage(depositError);
+            hideMessage(depositSuccess);
+
+            if (isNaN(amount) || amount < 10000) {
+                showMessage(depositError, 'Nominal deposit minimal Rp 10.000.');
+                return;
+            }
+
+            if (currentUser) {
+                // Simulasi deposit
+                const coinsEarned = amount; // 1 Rupiah = 1 Koin
+                users[currentUser].coins += coinsEarned;
+                users[currentUser].history.unshift({
+                    type: 'Deposit',
+                    amount: coinsEarned,
+                    date: new Date().toLocaleString(),
+                    status: 'Completed'
+                });
+                saveUsersToLocalStorage();
+                updateDashboard();
+                showMessage(depositSuccess, `Deposit sebesar Rp ${amount.toLocaleString('id-ID')} berhasil! Anda mendapatkan ${coinsEarned.toLocaleString('id-ID')} Koin.`);
+                depositAmountInput.value = '';
+            } else {
+                showMessage(depositError, 'Anda harus login untuk melakukan deposit.');
+            }
+        }
+
+        // --- Order Service Functions ---
+        function populateCategories() {
+            categorySelect.innerHTML = '<option value="">Pilih Kategori</option>';
+            for (const category in allServicesData) {
+                const option = document.createElement('option');
+                option.value = category;
+                option.textContent = category;
+                categorySelect.appendChild(option);
+            }
+        }
+
+        function resetOrderForm() {
+            serviceSelect.innerHTML = '<option value="">Pilih Layanan</option>';
+            linkInput.value = '';
+            quantityInput.value = '';
+            quantityInput.min = 10;
+            quantityInput.max = 10000;
+            quantityInput.placeholder = 'Min: 10 - Max: 10000';
+            chargeDisplay.textContent = 'Charge: Rp 0';
+            quantityInput.disabled = false;
+        }
+
+        categorySelect.addEventListener('change', () => {
+            const selectedCategory = categorySelect.value;
+            serviceSelect.innerHTML = '<option value="">Pilih Layanan</option>';
+            quantityInput.value = '';
+            quantityInput.min = 10;
+            quantityInput.max = 10000;
+            quantityInput.placeholder = 'Min: 10 - Max: 10000';
+            chargeDisplay.textContent = 'Charge: Rp 0';
+
+            if (selectedCategory && allServicesData[selectedCategory]) {
+                allServicesData[selectedCategory].forEach(service => {
+                    const option = document.createElement('option');
+                    option.value = service.name;
+                    option.textContent = `${service.name} (${service.status})`;
+                    if (service.status === "Habis") {
+                        option.disabled = true;
+                    }
+                    serviceSelect.appendChild(option);
+                });
+            }
+        });
+
+        serviceSelect.addEventListener('change', () => {
+            const selectedService = serviceSelect.value;
+            const selectedCategory = categorySelect.value;
+            let currentServiceData = null;
+
+            if (selectedCategory && selectedService && allServicesData[selectedCategory]) {
+                currentServiceData = allServicesData[selectedCategory].find(s => s.name === selectedService);
+            }
+
+            if (currentServiceData) {
+                quantityInput.min = currentServiceData.min;
+                quantityInput.max = currentServiceData.max;
+                quantityInput.placeholder = `Min: ${currentServiceData.min} - Max: ${currentServiceData.max}`;
+                quantityInput.disabled = (currentServiceData.status === "Habis");
+                calculateCharge();
+            } else {
+                quantityInput.min = 10;
+                quantityInput.max = 10000;
+                quantityInput.placeholder = 'Min: 10 - Max: 10000';
+                quantityInput.disabled = false;
+                chargeDisplay.textContent = 'Charge: Rp 0';
+            }
+        });
+
+        quantityInput.addEventListener('input', calculateCharge);
+
+        function calculateCharge() {
+            const selectedCategory = categorySelect.value;
+            const selectedService = serviceSelect.value;
+            const quantity = parseInt(quantityInput.value);
+            let charge = 0;
+
+            if (selectedCategory && selectedService && quantity && allServicesData[selectedCategory]) {
+                const currentServiceData = allServicesData[selectedCategory].find(s => s.name === selectedService);
+
+                if (currentServiceData && currentServiceData.status !== "Habis" && quantity >= currentServiceData.min && quantity <= currentServiceData.max) {
+                    charge = (quantity / currentServiceData.base_qty) * currentServiceData.price;
+                }
+            }
+            chargeDisplay.textContent = `Charge: Rp ${charge.toLocaleString('id-ID')}`;
+            return charge; // Return the calculated charge
+        }
+
+        function handleOrder() {
+            const selectedCategory = categorySelect.value;
+            const selectedService = serviceSelect.value;
+            const link = linkInput.value.trim();
+            const quantity = parseInt(quantityInput.value);
+            const calculatedCharge = calculateCharge();
+
+            if (!selectedCategory || !selectedService || !link || isNaN(quantity) || quantity <= 0) {
+                alert('Mohon lengkapi semua kolom dengan benar.');
+                return;
+            }
+
+            const currentServiceData = allServicesData[selectedCategory].find(s => s.name === selectedService);
+
+            if (!currentServiceData || currentServiceData.status === "Habis") {
+                 alert('Layanan ini sedang habis atau tidak valid. Mohon pilih layanan lain.');
+                 return;
+            }
+            if (quantity < currentServiceData.min || quantity > currentServiceData.max) {
+                 alert(`Jumlah harus antara ${currentServiceData.min} dan ${currentServiceData.max} untuk layanan ini.`);
+                 return;
+            }
+
+            if (currentUser && users[currentUser]) {
+                if (users[currentUser].coins < calculatedCharge) {
+                    alert(`Saldo koin tidak cukup. Anda memiliki ${users[currentUser].coins.toLocaleString('id-ID')} Koin, sedangkan biaya adalah ${calculatedCharge.toLocaleString('id-ID')} Koin.`);
+                    return;
+                }
+
+                // Simulasi pengurangan koin dan penambahan riwayat
+                users[currentUser].coins -= calculatedCharge;
+                users[currentUser].history.unshift({
+                    type: 'Order',
+                    service: selectedService,
+                    link: link,
+                    quantity: quantity,
+                    cost: calculatedCharge,
+                    date: new Date().toLocaleString(),
+                    status: 'Pending' // Simulated status
+                });
+                saveUsersToLocalStorage();
+                updateDashboard(); // Update balance and history display
+
+                alert(`Pesanan berhasil! ${selectedService} sejumlah ${quantity} telah diproses. Saldo koin Anda: ${users[currentUser].coins.toLocaleString('id-ID')} Koin.`);
+                resetOrderForm();
+            } else {
+                alert('Anda harus login untuk memesan layanan.');
+            }
+        }
+
+        function renderOrderHistory() {
+            orderHistoryList.innerHTML = '';
+            if (currentUser && users[currentUser] && users[currentUser].history.length > 0) {
+                noHistoryMessage.style.display = 'none';
+                users[currentUser].history.forEach(item => {
+                    const historyItemDiv = document.createElement('div');
+                    historyItemDiv.classList.add('history-item');
+
+                    let statusClass = '';
+                    if (item.status === 'Completed') statusClass = 'completed';
+                    else if (item.status === 'Pending') statusClass = 'pending';
+                    else if (item.status === 'Cancelled') statusClass = 'cancelled';
+
+                    if (item.type === 'Order') {
+                        historyItemDiv.innerHTML = `
+                            <p><strong>Layanan:</strong> ${item.service}</p>
+                            <p><strong>Link:</strong> ${item.link}</p>
+                            <p><strong>Jumlah:</strong> ${item.quantity}</p>
+                            <p><strong>Biaya:</strong> ${item.cost.toLocaleString('id-ID')} Koin</p>
+                            <p><strong>Tanggal:</strong> ${item.date}</p>
+                            <p><strong>Status:</strong> <span class="status ${statusClass}">${item.status}</span></p>
+                        `;
+                    } else if (item.type === 'Deposit') {
+                        historyItemDiv.innerHTML = `
+                            <p><strong>Jenis:</strong> Deposit</p>
+                            <p><strong>Jumlah Deposit:</strong> ${item.amount.toLocaleString('id-ID')} Koin</p>
+                            <p><strong>Tanggal:</strong> ${item.date}</p>
+                            <p><strong>Status:</strong> <span class="status ${statusClass}">${item.status}</span></p>
+                        `;
+                    }
+                    orderHistoryList.appendChild(historyItemDiv);
+                });
+            } else {
+                noHistoryMessage.style.display = 'block';
+            }
+        }
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if a user was previously logged in (simulasi)
+            const lastLoggedInUser = localStorage.getItem('kingstoreLastLoggedInUser');
+            if (lastLoggedInUser && users[lastLoggedInUser]) {
+                currentUser = lastLoggedInUser;
+                updateDashboard();
+                showView('dashboardView');
+                showDashboardSection('order');
+            } else {
+                showView('loginView');
+            }
+
+            // Save current user on logout (for next session)
+            window.addEventListener('beforeunload', () => {
+                if (currentUser) {
+                    localStorage.setItem('kingstoreLastLoggedInUser', currentUser);
+                } else {
+                    localStorage.removeItem('kingstoreLastLoggedInUser');
+                }
+            });
+        });
+
+    </script>
 </body>
 </html>
